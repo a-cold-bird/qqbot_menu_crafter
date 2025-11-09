@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ Bot Help Menu Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>QQ Bot Help Menu Generator</h1>
+            <p>可视化编辑和生成 QQ Bot 帮助菜单</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Panel - Editor -->
+            <div class="editor-panel">
+                <div class="panel-header">
+                    <h2>配置编辑器</h2>
+                    <div class="button-group">
+                        <button id="saveBtn" class="btn btn-primary">保存配置</button>
+                        <button id="generateBtn" class="btn btn-success">生成图片</button>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="basic">基本信息</button>
+                    <button class="tab-btn" data-tab="layout">布局设置</button>
+                    <button class="tab-btn" data-tab="theme">主题配色</button>
+                    <button class="tab-btn" data-tab="fonts">字体设置</button>
+                    <button class="tab-btn" data-tab="sections">菜单内容</button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Basic Info Tab -->
+                    <div id="basic" class="tab-pane active">
+                        <h3>Bot 基本信息</h3>
+                        <div class="form-group">
+                            <label>Bot 名称</label>
+                            <input type="text" id="botName" class="form-control" placeholder="输入 Bot 名称">
+                        </div>
+                        <div class="form-group">
+                            <label>QQ 号</label>
+                            <input type="text" id="botQQ" class="form-control" placeholder="输入 QQ 号">
+                        </div>
+                        <div class="form-group">
+                            <label>Bot 描述</label>
+                            <textarea id="botDescription" class="form-control" rows="2" placeholder="输入 Bot 描述"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Bot 公告</label>
+                            <textarea id="botNotice" class="form-control" rows="2" placeholder="输入 Bot 公告"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>图片角标（水印）</label>
+                            <input type="text" id="cornerBadgeText" class="form-control" placeholder="在图片右上角显示的文字，如：@作者名 或 v1.0">
+                            <small style="color: #64748b; font-size: 12px; margin-top: 4px; display: block;">留空则不显示角标</small>
+                        </div>
+                        <div class="form-group">
+                            <label>水印位置</label>
+                            <select id="cornerBadgePosition" class="form-control">
+                                <option value="top-right">右上</option>
+                                <option value="bottom-right">右下</option>
+                                <option value="bottom-left">左下</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>头像</label>
+                            <div class="file-upload" style="display: flex; align-items: center; gap: 8px;">
+                                <input type="file" id="avatarUpload" accept="image/*">
+                                <label for="avatarUpload" class="upload-label">选择头像文件</label>
+                                <span id="avatarFileName" class="file-name"></span>
+                                <button type="button" id="avatarDeleteBtn" class="btn btn-danger btn-sm" style="display: none;" onclick="deleteAvatar()">删除</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Logo</label>
+                            <div class="file-upload" style="display: flex; align-items: center; gap: 8px;">
+                                <input type="file" id="logoUpload" accept="image/*">
+                                <label for="logoUpload" class="upload-label">选择 Logo 文件</label>
+                                <span id="logoFileName" class="file-name"></span>
+                                <button type="button" id="logoDeleteBtn" class="btn btn-danger btn-sm" style="display: none;" onclick="deleteLogo()">删除</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Layout Tab -->
+                    <div id="layout" class="tab-pane">
+                        <h3>布局设置</h3>
+                        <div class="form-group">
+                            <label>每行显示数量</label>
+                            <input type="number" id="itemsPerRow" class="form-control" min="1" max="6" value="3">
+                        </div>
+                        <div class="form-group">
+                            <label>卡片宽度</label>
+                            <input type="number" id="cardWidth" class="form-control" min="100" max="400" value="200">
+                        </div>
+                        <div class="form-group">
+                            <label>卡片高度</label>
+                            <input type="number" id="cardHeight" class="form-control" min="50" max="200" value="80">
+                        </div>
+                        <div class="form-group">
+                            <label>内边距</label>
+                            <input type="number" id="padding" class="form-control" min="0" max="50" value="20">
+                        </div>
+                        <div class="form-group">
+                            <label>间距</label>
+                            <input type="number" id="spacing" class="form-control" min="0" max="50" value="15">
+                        </div>
+                    </div>
+
+                    <!-- Theme Tab -->
+                    <div id="theme" class="tab-pane">
+                        <h3>主题配色</h3>
+                        <div class="form-group">
+                            <label>预设主题</label>
+                            <select id="presetTheme" class="form-control">
+                                <option value="">选择预设主题</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>背景类型</label>
+                            <select id="backgroundType" class="form-control">
+                                <option value="gradient">渐变</option>
+                                <option value="solid">纯色</option>
+                            </select>
+                        </div>
+                        <div id="gradientOptions" class="gradient-options">
+                            <div class="color-grid">
+                                <div class="color-input-group">
+                                    <label>渐变色1</label>
+                                    <div class="color-inputs">
+                                        <input type="color" id="gradientColor1" class="color-picker">
+                                        <input type="text" id="gradientColor1Text" class="color-text form-control" placeholder="#000000">
+                                    </div>
+                                </div>
+                                <div class="color-input-group">
+                                    <label>渐变色2</label>
+                                    <div class="color-inputs">
+                                        <input type="color" id="gradientColor2" class="color-picker">
+                                        <input type="text" id="gradientColor2Text" class="color-text form-control" placeholder="#ffffff">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>渐变角度</label>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <select id="gradientAngle" class="form-control" style="flex: 1;">
+                                        <option value="0">→ 从左到右 (0°)</option>
+                                        <option value="45">↗ 从左下到右上 (45°)</option>
+                                        <option value="90">↑ 从下到上 (90°)</option>
+                                        <option value="135">↖ 从右下到左上 (135°)</option>
+                                        <option value="180">← 从右到左 (180°)</option>
+                                        <option value="225">↙ 从右上到左下 (225°)</option>
+                                        <option value="270">↓ 从上到下 (270°)</option>
+                                        <option value="315">↘ 从左上到右下 (315°)</option>
+                                    </select>
+                                    <input type="range" id="gradientAngleSlider" min="0" max="360" value="135" style="flex: 1; cursor: pointer;">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="solidOptions" class="solid-options" style="display: none;">
+                            <div class="color-input-group">
+                                <label>背景颜色</label>
+                                <div class="color-inputs">
+                                    <input type="color" id="solidColor" class="color-picker">
+                                    <input type="text" id="solidColorText" class="color-text form-control" placeholder="#f5f5f5">
+                                </div>
+                            </div>
+                        </div>
+                        <h4>卡片与文字颜色</h4>
+                        <div class="color-grid">
+                            <div class="color-input-group">
+                                <label>卡片背景</label>
+                                <div class="color-inputs">
+                                    <input type="color" id="cardBackground" class="color-picker">
+                                    <input type="text" id="cardBackgroundText" class="color-text form-control" placeholder="#ffffff">
+                                </div>
+                            </div>
+                            <div class="color-input-group">
+                                <label>卡片边框</label>
+                                <div class="color-inputs">
+                                    <input type="color" id="cardBorder" class="color-picker">
+                                    <input type="text" id="cardBorderText" class="color-text form-control" placeholder="#e0e0e0">
+                                </div>
+                            </div>
+                            <div class="color-input-group">
+                                <label>标题颜色</label>
+                                <div class="color-inputs">
+                                    <input type="color" id="titleColor" class="color-picker">
+                                    <input type="text" id="titleColorText" class="color-text form-control" placeholder="#333333">
+                                </div>
+                            </div>
+                            <div class="color-input-group">
+                                <label>副标题颜色</label>
+                                <div class="color-inputs">
+                                    <input type="color" id="subtitleColor" class="color-picker">
+                                    <input type="text" id="subtitleColorText" class="color-text form-control" placeholder="#666666">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fonts Tab -->
+                    <div id="fonts" class="tab-pane">
+                        <h3>字体设置</h3>
+                        <div class="form-group">
+                            <label>上传字体文件</label>
+                            <div class="file-upload">
+                                <input type="file" id="fontUpload" accept=".ttf,.otf">
+                                <label for="fontUpload" class="upload-label">选择字体文件 (.ttf)</label>
+                                <span id="fontFileName" class="file-name"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>标题字体</label>
+                            <select id="titleFont" class="form-control">
+                                <option value="default">默认</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="display: flex; gap: 20px; align-items: center;">
+                            <label style="display: flex; align-items: center; gap: 5px; margin: 0;">
+                                <input type="checkbox" id="titleBold" class="form-check">
+                                <span>粗体</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 5px; margin: 0;">
+                                <input type="checkbox" id="titleItalic" class="form-check">
+                                <span>斜体</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>内容字体</label>
+                            <select id="contentFont" class="form-control">
+                                <option value="default">默认</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="display: flex; gap: 20px; align-items: center;">
+                            <label style="display: flex; align-items: center; gap: 5px; margin: 0;">
+                                <input type="checkbox" id="contentBold" class="form-check">
+                                <span>粗体</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 5px; margin: 0;">
+                                <input type="checkbox" id="contentItalic" class="form-check">
+                                <span>斜体</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>标题字号</label>
+                            <input type="number" id="titleSize" class="form-control" min="16" max="72" value="32">
+                        </div>
+                        <div class="form-group">
+                            <label>副标题字号</label>
+                            <input type="number" id="subtitleSize" class="form-control" min="12" max="48" value="18">
+                        </div>
+                        <div class="form-group">
+                            <label>卡片标题字号</label>
+                            <input type="number" id="cardTitleSize" class="form-control" min="10" max="32" value="16">
+                        </div>
+                        <div class="form-group">
+                            <label>卡片描述字号</label>
+                            <input type="number" id="cardDescSize" class="form-control" min="8" max="24" value="12">
+                        </div>
+                    </div>
+
+                    <!-- Sections Tab -->
+                    <div id="sections" class="tab-pane">
+                        <h3>菜单内容</h3>
+                        <div class="button-group">
+                            <button id="addSectionBtn" class="btn btn-primary">添加板块</button>
+                        </div>
+                        <div id="sectionsContainer" class="sections-container">
+                            <!-- Sections will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel - Preview -->
+            <div class="preview-panel">
+                <div class="panel-header">
+                    <h2>实时预览</h2>
+                    <button id="downloadBtn" class="btn btn-success">下载图片</button>
+                </div>
+                <div class="preview-container">
+                    <div id="previewLoading" class="loading">
+                        <div class="spinner"></div>
+                        <p>生成预览中...</p>
+                    </div>
+                    <img id="previewImage" src="" alt="预览图片" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Icon Picker Modal -->
+    <div id="iconPickerModal" class="icon-picker-modal" style="display: none;">
+        <div class="icon-picker-overlay" onclick="closeIconPicker()"></div>
+        <div class="icon-picker-content">
+            <div class="icon-picker-header">
+                <h3>选择图标</h3>
+                <button class="icon-picker-close" onclick="closeIconPicker()">×</button>
+            </div>
+            <div class="icon-picker-search">
+                <input type="text" id="iconSearchInput" class="form-control" placeholder="搜索图标...">
+            </div>
+            <div class="icon-picker-tabs">
+                <button class="icon-tab active" data-category="all">全部</button>
+                <button class="icon-tab" data-category="smileys">表情</button>
+                <button class="icon-tab" data-category="people">人物</button>
+                <button class="icon-tab" data-category="animals">动物</button>
+                <button class="icon-tab" data-category="food">食物</button>
+                <button class="icon-tab" data-category="activities">活动</button>
+                <button class="icon-tab" data-category="travel">旅行</button>
+                <button class="icon-tab" data-category="objects">物品</button>
+                <button class="icon-tab" data-category="symbols">符号</button>
+            </div>
+            <div class="icon-picker-body" id="iconPickerBody">
+                <!-- Icons will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- html2canvas for capturing preview - using multiple CDN fallbacks -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+            integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+            onerror="this.onerror=null; this.src='https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js'"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

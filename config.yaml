@@ -1,0 +1,150 @@
+bot_info:
+  name: 白i | SHIROI
+  qq: '3314995381'
+  description: '白i是来自喵喵国的全能猫娘，精通各种电子设备和编程，无论是深奥的代码还是前沿的科技参数，都能轻松驾驭！还能陪你一起玩游戏、看番剧，探索二次元的奇妙世界呢
+
+    以上这些是白i对自己的介绍
+
+    '
+  notice: '可以通过对话或者艾特进行触发。一些命令需要引用回复。有问题请进行反馈。
+
+  corner_badge: by 39c5bb
+  corner_badge_position: bottom-right
+  avatar: uploads/icon.png
+  logo: uploads/logo.png
+layout:
+  items_per_row: 3
+  card_width: 200
+  card_height: 80
+  padding: 20
+  spacing: 15
+theme:
+  name: default
+  background_type: gradient
+  background_gradient:
+  - '#ffe5ec'
+  - '#ffd6e0'
+  angle: 135
+  background_color: '#f5dbdb'
+  background_image: ''
+  card_background: '#ffffff'
+  card_border: '#f0cfd4'
+  card_shadow: rgba(0, 0, 0, 0.1)
+  title_color: '#c2185b'
+  subtitle_color: '#d81b60'
+  card_title_color: '#c2185b'
+  card_desc_color: '#d81b60'
+  icon_background: '#f0f0f0'
+  icon_color: '#666666'
+fonts:
+  title_font: default
+  content_font: default
+  title_bold: false
+  title_italic: false
+  content_bold: true
+  content_italic: false
+  title_size: 32
+  subtitle_size: 18
+  card_title_size: 18
+  card_desc_size: 12
+sections:
+- name: AI功能
+  icon: 🐳
+  items:
+  - icon: 💬
+    name: '!d '
+    description: 选择困难症
+    usage: '!d 吃饭还是睡觉'
+  - icon: 📊
+    name: 群分析
+    description: 分析本群的近期聊天记录
+    usage: 群分析
+  - icon: 👤
+    name: 用户画像
+    description: 查看指定用户的画像数据
+    usage: 用户画像
+  - icon: ❔
+    name: '!zssm'
+    description: 这是什么
+    usage: '!zssm'
+- name: 图片处理
+  icon: 🎨
+  items:
+  - icon: 🎭
+    name: '#cos化'
+    description: 将图片转换为cos风格
+    usage: '#cos化'
+  - icon: 🌸
+    name: '#二次元化'
+    description: 将图片转为二次元风格
+    usage: '#二次元化'
+  - icon: 🥤
+    name: '#可乐罐化'
+    description: 可乐罐风格转换
+    usage: '#可乐罐化'
+  - icon: 🎁
+    name: '#手办化'
+    description: 将图片转为手办风格
+    usage: '#手办化'
+  - icon: 🥖
+    name: one-last-kiss
+    description: 将图片转化为one-last-kiss 的线稿
+    usage: oli
+- name: 娱乐休闲
+  icon: ''
+  items:
+  - icon: 🔮
+    name: 塔罗牌
+    description: 塔罗占卜
+    usage: 塔罗牌
+  - icon: 🔮
+    name: jrys
+    description: 查看今日运势
+    usage: jrys
+  - icon: 🍗
+    name: thursday
+    description: KFC疯狂星期四段子
+    usage: thursday
+  - icon: 🌅
+    name: 早安
+    description: 发送早安问候
+    usage: 早安
+  - icon: 🏆
+    name: 早安排行榜
+    description: 查看今天的起床先锋
+    usage: 早安排行榜
+  - icon: 🌙
+    name: 晚安
+    description: 发送晚安问候
+    usage: 晚安
+  - icon: 🏆
+    name: 晚安排行榜
+    description: 查看今天的睡觉标兵
+    usage: 晚安排行榜
+  - icon: 🎵
+    name: music
+    description: 搜索并播放网易云音乐
+    usage: music 甩葱歌
+  - icon: 📺
+    name: b站点播
+    description: 点播B站视频
+    usage: b站点播 草莓猫taffy
+  - icon: 😊
+    name: emojihub-bili
+    description: B站表情包功能
+    usage: emojihub-bili
+  - icon: 🐱
+    name: pet
+    description: 生成一些有趣表情包
+    usage: pet
+  - icon: 🥰
+    name: 抽老婆
+    description: 抽取群友作为你的老婆
+    usage: 抽老婆
+- name: 实用工具
+  icon: ''
+  items:
+  - icon: 💳
+    name: status
+    description: 查看运行状态和信息
+    usage: status
