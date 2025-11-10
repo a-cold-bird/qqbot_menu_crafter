@@ -185,12 +185,27 @@ def load_config():
             return None
 
 
+class MultilineDumper(yaml.SafeDumper):
+    """Custom YAML dumper to handle multiline strings properly"""
+    pass
+
+def str_representer(dumper, data):
+    """Represent strings with newlines as block scalars for better readability"""
+    if '\n' in data:
+        # Use literal block scalar (|-) for multiline strings
+        return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
+    return dumper.represent_scalar('tag:yaml.org,2002:str', data)
+
+MultilineDumper.add_representer(str, str_representer)
+
+
 def save_config(config):
     """Save configuration to YAML file"""
     with config_lock:
         try:
             with open('config.yaml', 'w', encoding='utf-8') as f:
-                yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+                yaml.dump(config, f, Dumper=MultilineDumper,
+                         allow_unicode=True, sort_keys=False)
             config_cache.clear()
             config_cache.update(config)
             return True

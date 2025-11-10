@@ -1,13 +1,10 @@
 bot_info:
   name: 白i | SHIROI
   qq: '3314995381'
-  description: '白i是来自喵喵国的全能猫娘，精通各种电子设备和编程，无论是深奥的代码还是前沿的科技参数，都能轻松驾驭！还能陪你一起玩游戏、看番剧，探索二次元的奇妙世界呢
-
+  description: |-
+    白i是来自喵喵国的全能猫娘，精通各种电子设备和编程，无论是深奥的代码还是前沿的科技参数，都能轻松驾驭！还能陪你一起玩游戏、看番剧，探索二次元的奇妙世界呢
     以上这些是白i对自己的介绍
-
-    '
-  notice: '可以通过对话或者艾特进行触发。一些命令需要引用回复。有问题请进行反馈。
-
+  notice: 可以通过对话或者艾特进行触发。一些命令需要引用回复。有问题请进行反馈。
   corner_badge: by 39c5bb
   corner_badge_position: bottom-right
   avatar: uploads/icon.png
@@ -21,11 +18,11 @@ layout:
 theme:
   name: default
   background_type: gradient
+  background_color: '#f5dbdb'
   background_gradient:
   - '#ffe5ec'
   - '#ffd6e0'
   angle: 135
-  background_color: '#f5dbdb'
   background_image: ''
   card_background: '#ffffff'
   card_border: '#f0cfd4'
